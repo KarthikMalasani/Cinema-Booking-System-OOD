@@ -1,0 +1,241 @@
+package edu.northeastern.csye6200;
+
+import java.util.Scanner;
+
+public class LAB3_P1 {
+	public static void main(String[] args) {
+		// TODO: write your code here
+		Scanner input = new Scanner(System.in);
+		System.out.print("Enter a credit card number as a long integer: ");
+		long cardNum = input.nextLong();
+		
+		//Check for the prefix 
+		
+		if(prefixMatched(cardNum, 4)||prefixMatched(cardNum, 5)||prefixMatched(cardNum, 37)||prefixMatched(cardNum, 6)) {
+			
+			if (isValid(cardNum)) {
+				System.out.println(cardNum+" is valid");
+			}
+			else {
+				System.out.println(cardNum+" is invalid");
+			}
+		}
+		else {
+			System.out.println(cardNum+" is invalid");
+		}
+	}
+
+	/** Return true if the card number is valid */
+	public static boolean isValid(long number) {
+		// TODO: write your code here
+		String strNum = String.valueOf(number);
+		String revStrNum = "";
+		for (int i=strNum.length()-1; i>=0; i--) {
+			revStrNum += strNum.charAt(i);
+		}
+		long revNum = Long.parseLong(revStrNum);
+		int sum1 = sumOfDoubleEvenPlace(revNum);           // sum of double even place numbers
+		int sum2 = sumOfOddPlace(revNum);                  // sum of odd place numbers
+		
+		int totalSum = sum1+sum2;
+		
+		if(totalSum % 10 == 0) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	/** Get the result from Step 2 */
+	public static int sumOfDoubleEvenPlace(long number) {
+		// TODO: write your code here
+		String num = String.valueOf(number);
+		int sum1 = 0;
+		int doubleVal = 0;
+		int digit = 0;
+	
+		for (int i=0; i<num.length(); i++) {
+			if (i % 2 != 0) {
+				doubleVal = Character.getNumericValue(num.charAt(i)) * 2;
+				digit = getDigit(doubleVal);
+				sum1 += digit;
+			}
+		}
+		return sum1;
+	}
+
+	/**
+	 * Return this number if it is a single digit, otherwise, return the sum of
+	 * the two digits
+	 */
+	public static int getDigit(int number) {
+		// TODO: write your code here
+		int sum =0;
+		
+		if(number < 10) {
+			return number;
+		}
+		else {
+			while(number != 0) {
+				int digit = number%10;
+				sum += digit;
+				number = number/10;
+			}
+			return sum;
+		}
+		
+	}
+
+	/** Return sum of odd place digits in number */
+	public static int sumOfOddPlace(long number) {
+		// TODO: write your code here
+		String num = String.valueOf(number);
+		int sum2 = 0;
+	
+		for (int i=0; i<num.length(); i++) {
+			if (i % 2 == 0) {
+				sum2 += Character.getNumericValue(num.charAt(i));
+			}
+		}
+		return sum2;
+	}
+
+	/** Return true if the digit d is a prefix for number */
+	public static boolean prefixMatched(long number, int d) {
+		// TODO: write your code here
+		int prefixSize = getSize(d);
+		long prefix = getPrefix(number, prefixSize);
+		if (prefix==d) {
+			return true;
+		}
+		return false;
+	}
+
+	/** Return the number of digits in d */
+	public static int getSize(long d) {
+		// TODO: write your code here
+		String strD = String.valueOf(d);
+		return strD.length();
+	}
+
+	/**
+	 * Return the first k number of digits from number. If the number of digits
+	 * in number is less than k, return number.
+	 */
+	public static long getPrefix(long number, int k) {
+		// TODO: write your code here
+		String strNum = String.valueOf(number);
+		long prefix = Long.parseLong(strNum.substring(0, k));
+		return prefix;
+	}
+}
+
+
+package edu.northeastern.csye6200;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class LAB3_P2 {
+	public static void main(String[] args) {
+		// TODO: write your code here
+		Scanner input = new Scanner(System.in);
+		
+		System.out.print("Enter the number of values: ");
+		int numOfValues = input.nextInt();
+		
+		System.out.print("Enter the number: ");
+		input.nextLine();
+		int[] numArr = new int[numOfValues]; 
+		for (int i=0; i<numArr.length; i++) {
+			numArr[i] = input.nextInt();
+			
+		}
+//		System.out.println(Arrays.toString(numArr));
+		
+		//Alternate way to get the input the user input of numbers in the same line
+		
+		/* String inputLine = input.nextLine();
+
+		String[] intString = inputLine.split(" ");
+		
+		
+		int[] numArr = new int[intString.length];
+		for (int i=0; i<intString.length; i++) {
+			numArr[i] = Integer.parseInt(intString[i]);
+		} */
+		
+		if(isConsecutiveFour(numArr) && numArr.length >=4) {
+			System.out.println("The list has consecutive fours");
+		}
+		else {
+			System.out.println("The list has no consecutive fours");
+		}
+	}
+
+	public static boolean isConsecutiveFour(int[] values) {
+		// TODO: write your code here
+		int n = values.length;
+		int count = 1;
+		for (int i=0; i<n+2; i++) {
+			if(values[i%n]==values[(i+1)%n]) {
+				count +=1;
+				if(count==4) {
+					return true;
+				}
+			}
+			else {
+				count = 1;
+			}
+		}
+		return false;
+	}
+
+}
+
+
+package edu.northeastern.csye6200;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class LAB3_P3 {
+	public static void main(String[] args) {
+		// TODO: write your code here
+		Scanner input = new Scanner(System.in);
+		int[] numArr = {1,1,2,3,3,4,5};
+		System.out.println("Original nums: "+Arrays.toString(numArr));
+		int finalArrLen = removeDuplicates(numArr);
+		System.out.println("Number of unique elements in nums is: "+finalArrLen);
+		
+	}
+
+	public static int removeDuplicates(int[] nums) {
+		// TODO: write your code here
+		int n = nums.length;
+		int count= 0;
+		
+		int[] newArr = new int[n];
+		int j = 0;
+		newArr[j]=nums[0];
+		
+		
+		for(int i=1; i<n; i++) {
+			if(newArr[j]!=nums[i]) {
+				j += 1;
+				newArr[j] = nums[i];
+			}
+		}
+		System.out.println("Final nums: "+Arrays.toString(newArr));
+		
+		for(int k=0; k<n; k++) {
+			if(newArr[k]!=0) {
+				count+=1;
+			}
+		}
+		return count; 
+	}
+
+}
+

@@ -1,0 +1,402 @@
+package edu.northeastern.csye6200;
+
+import java.util.ArrayList;
+
+public class Cart {
+	// TODO: write your code here
+	private ArrayList<Product> products;
+	private double cartTotal;
+	
+
+    public Cart() {
+    	// TODO: write your code here
+    	this.products = new ArrayList<Product>();
+    	this.cartTotal= 0;
+    	
+    }
+ 
+    public double getCartTotal() {
+    	// TODO: write your code here
+    	for (Product p: products) {
+    		this.cartTotal += p.getPrice();
+    	}
+    	return this.cartTotal;
+    }
+    
+    public void addProduct(Product product) {
+    	// TODO: write your code here
+    	products.add(product);
+    	
+    	
+    }
+    
+    public double calculateChange(double payment) {
+    	// TODO: write your code here
+//    	System.out.println(this.getCartTotal());
+    	return payment - this.cartTotal;
+    }
+    
+    @Override
+    public String toString() {
+    	// TODO: write your code here
+    	StringBuilder pResult = new StringBuilder();
+    	
+    	pResult.append("Cart{ ");
+    	
+    	for (Product p: this.products) {
+    		pResult.append("\""+p.getItemName()+"\",");
+    	}
+    	
+    	pResult.deleteCharAt(pResult.length() - 1);
+    	pResult.append(" }");
+    	
+    	return String.valueOf(pResult);
+    }
+}
+
+package edu.northeastern.csye6200;
+
+public class LAB5P1 {
+	public static void main(String[] args) {
+		// TODO: write your code here
+		MyInteger n1 = new MyInteger(7);
+		System.out.println("n1 is even? "+n1.isEven());
+		System.out.println("n1 is prime? "+n1.isPrime());
+		System.out.println("15 is prime? "+ MyInteger.isPrime(15));
+		int charArray = MyInteger.parseInt(new char[] {'4','3','7','8'});
+		System.out.println("parseInt(char[])for {'4','3','7','8'} = "+charArray);
+		int string = MyInteger.parseInt("4378");
+		System.out.println("parseInt(String) for \"4378\" = "+string);
+		MyInteger n2 = new MyInteger(24);
+		System.out.println("n2 is odd? "+n2.isOdd());
+		System.out.println("45 id odd? "+MyInteger.isOdd(45));
+		System.out.println("n1 is equal to n2? "+n1.equals(n2));
+		System.out.println("n1 is equal to 5? "+n1.equals(5));
+	}
+}
+
+class MyInteger {
+	private int value;
+	
+	// TODO: write your code here
+	
+	public MyInteger(int value) {
+		// TODO: write your code here
+		this.value = value;
+	}
+
+	public int getValue() {
+		// TODO: write your code here
+		return value;
+	}
+
+	public boolean isPrime() {
+		// TODO: write your code here
+		if(isPrime(value)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isPrime(int num) {
+		// TODO: write your code here
+		int count = 0;
+		for(int i=1; i<=num; i++) {
+			if (num % i == 0) {
+				count+=1;
+			}
+		}
+		if(count == 2) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isPrime(MyInteger o) {
+		// TODO: write your code here
+		int num = o.value;
+	    if(isPrime(num)) {
+	    	return true;
+	    }
+		return false;
+	}
+
+	public boolean isEven() {
+		// TODO: write your code here
+		if(isEven(value)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isOdd() {
+		// TODO: write your code here
+		if(isOdd(value)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isEven(int n) {
+		// TODO: write your code here
+		if(n%2 == 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isOdd(int n) {
+		// TODO: write your code here
+		if(n%2 != 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isEven(MyInteger n) {
+		// TODO: write your code here
+		int num = n.value;
+		if(isEven(n)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean equals(int anotherNum) {
+		// TODO: write your code here
+		if(value == anotherNum) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean equals(MyInteger o) {
+		// TODO: write your code here
+		int num = o.value;
+		if(equals(num)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static int parseInt(char[] numbers) {
+		// numbers consists of digit characters.
+		// For example, if numbers is {'1', '2', '5'}, the return value
+		// should be 125. Please note that
+		// numbers[0] is '1'
+		// numbers[1] is '2'
+		// numbers[2] is '5'
+
+		// TODO: write your code here
+		String num = "";
+		int intNum = 0;
+		for(int i=0; i<numbers.length; i++) {
+			num += numbers[i];
+		}
+//		System.out.println(num);
+		try {
+			intNum = Integer.parseInt(num);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		return intNum;
+		
+	}
+
+	public static int parseInt(String s) {
+		// s consists of digit characters.
+		// For example, if s is "125", the return value
+		// should be 125.
+		
+		// TODO: write your code here
+		return Integer.parseInt(s);
+	}
+}
+
+
+package edu.northeastern.csye6200;
+
+public class LAB5P2 {
+	public static void main(String[] args){
+		// TODO: write your code here
+		RoomPeople  a = new RoomPeople();
+		RoomPeople b = new RoomPeople();
+		
+		a.addOneToRoom();
+		a.addOneToRoom();
+		
+		b.addOneToRoom();
+		b.addOneToRoom();
+		b.addOneToRoom();
+		
+		System.out.println("Room a holds: "+a.getNumber());
+		System.out.println("Room b holds: "+b.getNumber());
+		System.out.println("Total in all rooms is "+ RoomPeople.getTotal());
+		
+		System.out.println("Remove two from both rooms");
+		
+		a.removeOneFromRoom();
+		a.removeOneFromRoom();
+		b.removeOneFromRoom();
+		b.removeOneFromRoom();
+		
+		System.out.println("Room a holds: "+a.getNumber());
+		System.out.println("Room b holds: "+b.getNumber());
+		System.out.println("Total in all rooms is "+ RoomPeople.getTotal());
+		
+		System.out.println("Remove two from room a (should not change the values)");
+		a.removeOneFromRoom();
+		a.removeOneFromRoom();
+		
+		System.out.println("Room a holds: "+a.getNumber());
+		System.out.println("Room b holds: "+b.getNumber());
+		System.out.println("Total in all rooms is "+ RoomPeople.getTotal());
+		
+	}
+}
+
+class RoomPeople {
+    int numberInRoom;
+    static int totalNumber;
+	// TODO: write your code here
+    
+    public static int getTotal(){
+    	// TODO: write your code here
+    	return totalNumber;
+    }
+    
+    public RoomPeople() {
+    	// TODO: write your code here
+    }
+    
+    public void addOneToRoom(){
+    	// TODO: write your code here
+    	this.numberInRoom += 1;
+    	totalNumber += 1;
+    }
+    
+    public void removeOneFromRoom(){
+    	// TODO: write your code here
+    	if(this.numberInRoom > 0) {
+	    	this.numberInRoom -= 1;
+	    	totalNumber -= 1;
+    	}
+    }
+    
+    public int getNumber(){
+    	// TODO: write your code here
+        return this.numberInRoom;
+    }
+}   
+
+package edu.northeastern.csye6200;
+
+import java.util.Scanner;
+
+public class LAB5P3 {
+
+    public static void main(String[] args) {
+    	// TODO: write your code here
+    	Scanner input = new Scanner(System.in);
+    	
+    	System.out.println("Creating the below products");
+    	Product milk = new Product("Milk", 3.7);
+    	Product bread = new Product("Bread", 2.25);
+    	Product eggs = new Product("Eggs", 4.3);
+    	
+    	System.out.println(milk.toString());
+    	System.out.println(bread.toString());
+    	System.out.println(eggs.toString());
+    	
+    	System.out.println("");
+    	System.out.println("Adding Milk and Eggs to Cart");
+    	Cart c1 = new Cart();
+    	c1.addProduct(milk);
+    	c1.addProduct(eggs);
+    	System.out.println(c1.toString());
+    	System.out.println("Total Cart Value: $"+c1.getCartTotal());
+    	
+    	System.out.println("");
+    	System.out.print("Customer payment: $");
+    	float payment = input.nextFloat();
+    	
+    	System.out.println("Total Change: $"+c1.calculateChange(payment));
+    	
+    	
+    	
+    	
+    	
+    }
+
+}
+
+
+package edu.northeastern.csye6200;
+
+public class Product {
+	// TODO: write your code here
+	private String itemName;
+	private double price;
+	
+
+    public Product(String itemName, double price) {
+    	// TODO: write your code here
+    	this.itemName = itemName;
+    	this.price = price;
+    }
+
+    public String getItemName() {
+    	// TODO: write your code here
+    	return this.itemName;
+    }
+
+    public double getPrice() {
+    	// TODO: write your code here
+    	return this.price;
+    }
+
+    @Override
+    public String toString() {
+    	// TODO: write your code here
+    	return "Product{ itemName=\""+this.itemName+"\", price=$"+this.price+" }";
+    }
+}
+
+package edu.northeastern.csye6200;
+
+public class Product {
+	// TODO: write your code here
+	private String itemName;
+	private double price;
+	
+
+    public Product(String itemName, double price) {
+    	// TODO: write your code here
+    	this.itemName = itemName;
+    	this.price = price;
+    }
+
+    public String getItemName() {
+    	// TODO: write your code here
+    	return this.itemName;
+    }
+
+    public double getPrice() {
+    	// TODO: write your code here
+    	return this.price;
+    }
+
+    @Override
+    public String toString() {
+    	// TODO: write your code here
+    	return "Product{ itemName=\""+this.itemName+"\", price=$"+this.price+" }";
+    }
+}
+
+
+
+
+
+
+
